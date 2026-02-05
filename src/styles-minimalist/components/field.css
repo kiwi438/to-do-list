@@ -1,0 +1,89 @@
+.field {
+  position: relative;
+  padding-top: 20px;
+
+  &:has(.field__input:focus) .field__label,
+  &:has(.field__input:not(:placeholder-shown)) .field__label {
+    color: var(--color-accent);
+    font-size: var(--font-size-sm);
+    top: 0;
+    transform: translateY(0);
+  }
+
+  &:has(.field__input:not(:placeholder-shown):not(:focus)) .field__label {
+    color: var(--color-text-secondary);
+  }
+}
+
+.field__label {
+  position: absolute;
+  top: calc(50% + 10px);
+  left: calc(var(--space-md) + 2px);
+  color: var(--color-text-tertiary);
+  font-size: var(--font-size-base);
+  font-weight: var(--font-weight-light);
+  transform: translateY(-50%);
+  transform-origin: left center;
+  pointer-events: none;
+  transition: all var(--duration-normal) var(--easing-decelerate);
+}
+
+.field__input {
+  --field-padding-x: var(--space-md);
+  --field-icon-size: 16px;
+
+  width: 100%;
+  height: var(--input-height);
+  padding: 0 var(--field-padding-x);
+  font-size: var(--font-size-base);
+  color: var(--color-text-primary);
+  background: linear-gradient(
+    135deg,
+    rgba(255, 255, 255, 0.06) 0%,
+    rgba(255, 255, 255, 0.02) 100%
+  );
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  border-radius: 14px;
+  box-shadow:
+    0 2px 8px rgba(0, 0, 0, 0.15),
+    inset 0 1px 0 rgba(255, 255, 255, 0.08);
+  transition: all var(--duration-normal) var(--easing-default);
+
+  &::placeholder {
+    color: transparent;
+  }
+
+  &:hover {
+    border-color: rgba(255, 255, 255, 0.2);
+    background: linear-gradient(
+      135deg,
+      rgba(255, 255, 255, 0.08) 0%,
+      rgba(255, 255, 255, 0.04) 100%
+    );
+  }
+
+  &:focus {
+    border-color: var(--color-accent);
+    background: linear-gradient(
+      135deg,
+      rgba(255, 255, 255, 0.1) 0%,
+      rgba(255, 255, 255, 0.05) 100%
+    );
+    box-shadow:
+      0 4px 16px rgba(30, 136, 229, 0.2),
+      inset 0 1px 0 rgba(255, 255, 255, 0.1);
+    outline: none;
+  }
+
+  &[type="search"] {
+    &:placeholder-shown {
+      padding-right: calc(var(--field-padding-x) * 2 + var(--field-icon-size));
+      background-image: url('../../assets/icons/icon-search_black.svg');
+      background-position: calc(100% - var(--field-padding-x)) 50%;
+      background-size: var(--field-icon-size);
+      background-repeat: no-repeat;
+    }
+  }
+}

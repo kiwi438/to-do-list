@@ -1,0 +1,100 @@
+.todo {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-xl);
+    width: 100%;
+    max-width: 420px;
+    min-height: 440px;
+    padding: var(--space-xl);
+    background: linear-gradient(
+        160deg,
+        rgba(255, 255, 255, 0.08) 0%,
+        rgba(255, 255, 255, 0.02) 100%
+    );
+    backdrop-filter: blur(24px);
+    -webkit-backdrop-filter: blur(24px);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    border-radius: 28px;
+    box-shadow:
+        0 8px 32px rgba(0, 0, 0, 0.4),
+        0 2px 8px rgba(0, 0, 0, 0.2),
+        inset 0 1px 0 rgba(255, 255, 255, 0.1);
+}
+
+.todo__title {
+    text-align: center;
+    font-size: var(--font-size-xl);
+    font-weight: var(--font-weight-light);
+    letter-spacing: -0.02em;
+    color: var(--color-text-primary);
+}
+
+.todo__form {
+    display: flex;
+    gap: var(--space-md);
+    align-items: flex-end;
+}
+
+.todo__field {
+    flex: 1;
+}
+
+.todo__info {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: var(--space-md);
+    padding: var(--space-sm) var(--space-md);
+    background: rgba(255, 255, 255, 0.04);
+    border: 1px solid rgba(255, 255, 255, 0.06);
+    border-radius: 12px;
+}
+
+.todo__count {
+    font-size: var(--font-size-sm);
+    font-weight: var(--font-weight-medium);
+    color: var(--color-text-secondary);
+    letter-spacing: 0.02em;
+    text-transform: uppercase;
+}
+
+.todo__delete-all-button {
+    padding: var(--space-xs) var(--space-sm);
+    font-size: var(--font-size-sm);
+    font-weight: var(--font-weight-regular);
+    color: var(--color-text-tertiary);
+    background: transparent;
+    border: none;
+    border-radius: 8px;
+    letter-spacing: 0;
+    text-transform: none;
+    transition: all var(--duration-fast) var(--easing-default);
+
+    &:hover {
+        color: var(--color-red);
+        background: rgba(229, 57, 53, 0.1);
+    }
+}
+
+.todo__list,
+.todo__empty-message {
+    &:empty {
+        display: none;
+    }
+}
+
+.todo__list {
+    --todo-list-gap: var(--space-sm);
+
+    display: flex;
+    flex-direction: column;
+    gap: var(--todo-list-gap);
+}
+
+.todo__empty-message {
+    text-align: center;
+    font-size: var(--font-size-base);
+    font-weight: var(--font-weight-light);
+    color: var(--color-text-tertiary);
+    padding: var(--space-xl) 0;
+}

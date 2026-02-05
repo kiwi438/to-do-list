@@ -1,0 +1,146 @@
+.todo-item {
+  display: flex;
+  align-items: center;
+  gap: var(--space-md);
+  padding: var(--space-md);
+  background: linear-gradient(
+    135deg,
+    rgba(255, 255, 255, 0.08) 0%,
+    rgba(255, 255, 255, 0.04) 100%
+  );
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  border-radius: 16px;
+  box-shadow:
+    0 2px 8px rgba(0, 0, 0, 0.2),
+    inset 0 1px 0 rgba(255, 255, 255, 0.08);
+  transition: all var(--duration-fast) var(--easing-default);
+
+  &:hover {
+    background: linear-gradient(
+      135deg,
+      rgba(255, 255, 255, 0.12) 0%,
+      rgba(255, 255, 255, 0.06) 100%
+    );
+    border-color: rgba(255, 255, 255, 0.15);
+    box-shadow:
+      0 4px 16px rgba(0, 0, 0, 0.25),
+      inset 0 1px 0 rgba(255, 255, 255, 0.1);
+    transform: translateY(-1px);
+  }
+
+  &.is-disappearing {
+    opacity: 0;
+    transform: translateX(-16px);
+    transition-duration: var(--duration-slow);
+    pointer-events: none;
+
+    & ~ .todo-item {
+      transform: translateY(calc((100% + var(--todo-list-gap)) * -1));
+      transition-delay: var(--duration-fast);
+      transition-duration: var(--duration-normal);
+      pointer-events: none;
+    }
+  }
+}
+
+.todo-item__checkbox {
+  flex-shrink: 0;
+  appearance: none;
+  position: relative;
+  width: 22px;
+  height: 22px;
+  margin: 0;
+  background: rgba(255, 255, 255, 0.06);
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
+  border: 1.5px solid rgba(255, 255, 255, 0.2);
+  border-radius: 50%;
+  box-shadow: inset 0 1px 2px rgba(0, 0, 0, 0.1);
+  transition: all var(--duration-normal) var(--easing-default);
+
+  &:hover {
+    border-color: rgba(255, 255, 255, 0.35);
+    background: rgba(255, 255, 255, 0.1);
+  }
+
+  &:checked {
+    background: linear-gradient(135deg, var(--color-blue) 0%, var(--color-blue-hover) 100%);
+    border-color: var(--color-blue);
+    box-shadow:
+      0 2px 8px rgba(30, 136, 229, 0.4),
+      inset 0 1px 0 rgba(255, 255, 255, 0.2);
+
+    & + .todo-item__label {
+      color: var(--color-text-disabled);
+      text-decoration: line-through;
+      text-decoration-color: var(--color-text-tertiary);
+    }
+  }
+
+  &:not(:checked)::after {
+    opacity: 0;
+  }
+
+  &::after {
+    content: '';
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 12px;
+    height: 12px;
+    background: url('../../assets/icons/icon-check_white.svg') center/contain no-repeat;
+    transition: opacity var(--duration-fast) var(--easing-default);
+  }
+}
+
+.todo-item__label {
+  flex: 1;
+  font-size: var(--font-size-base);
+  font-weight: var(--font-weight-regular);
+  color: var(--color-text-primary);
+  pointer-events: none;
+  transition: color var(--duration-normal) var(--easing-default);
+}
+
+.todo-item__delete-button {
+  flex-shrink: 0;
+  display: inline-flex;
+  justify-content: center;
+  align-items: center;
+  width: 32px;
+  height: 32px;
+  padding: 0;
+  color: var(--color-text-tertiary);
+  background: transparent;
+  border: none;
+  border-radius: 10px;
+  opacity: 0;
+  transition: all var(--duration-fast) var(--easing-default);
+
+  .todo-item:hover & {
+    opacity: 1;
+  }
+
+  &:hover {
+    color: var(--color-red);
+    background: linear-gradient(
+      135deg,
+      rgba(229, 57, 53, 0.2) 0%,
+      rgba(229, 57, 53, 0.1) 100%
+    );
+    box-shadow:
+      0 2px 8px rgba(229, 57, 53, 0.2),
+      inset 0 1px 0 rgba(255, 255, 255, 0.05);
+  }
+
+  &:active {
+    transform: scale(0.92);
+  }
+
+  * {
+    pointer-events: none;
+  }
+}
