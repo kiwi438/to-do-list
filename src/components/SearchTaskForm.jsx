@@ -1,7 +1,9 @@
+import { useContext } from "react";
 import Field from "./Field";
+import { TasksContext } from "../context/TasksContext";
 
-const SearchTaskForm = (props) => {
-  const { onSearchInput } = props;
+const SearchTaskForm = () => {
+  const { searchQuery, setSearchQuery } = useContext(TasksContext);
 
   return (
     // Нажатие enter не перезагружает страницу
@@ -11,7 +13,8 @@ const SearchTaskForm = (props) => {
         label="Search task"
         id="search-task"
         type="search"
-        onInput={(event) => onSearchInput(event.target.value)}
+        value={searchQuery}
+        onInput={(event) => setSearchQuery(event.target.value)}
       />
     </form>
   );

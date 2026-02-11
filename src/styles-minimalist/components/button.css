@@ -1,42 +1,54 @@
 .button {
-  display: inline-flex;
-  justify-content: center;
-  align-items: center;
-  height: var(--input-height);
-  padding: 0 var(--space-lg);
-  color: var(--color-black);
-  font-weight: var(--font-weight-medium);
-  font-size: var(--font-size-sm);
-  letter-spacing: 0.02em;
-  text-transform: uppercase;
-  background: linear-gradient(
-    135deg,
-    var(--color-yellow) 0%,
-    var(--color-yellow-hover) 100%
-  );
-  border: 1px solid rgba(255, 255, 255, 0.2);
-  border-radius: 14px;
-  box-shadow:
-    0 4px 12px rgba(253, 216, 53, 0.3),
-    inset 0 1px 0 rgba(255, 255, 255, 0.4);
-  transition: all var(--duration-normal) var(--easing-default);
-
-  &:hover {
+    display: inline-flex;
+    justify-content: center;
+    align-items: center;
+    height: var(--input-height);
+    padding: 0 var(--space-lg);
+    color: var(--color-black);
+    font-weight: var(--font-weight-medium);
+    font-size: var(--font-size-sm);
+    letter-spacing: 0.02em;
+    text-transform: uppercase;
     background: linear-gradient(
-      135deg,
-      var(--color-yellow-hover) 0%,
-      var(--color-yellow) 100%
+        135deg,
+        var(--color-yellow) 0%,
+        var(--color-yellow-hover) 100%
     );
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    border-radius: 14px;
     box-shadow:
-      0 6px 20px rgba(253, 216, 53, 0.4),
-      inset 0 1px 0 rgba(255, 255, 255, 0.5);
-    transform: translateY(-1px);
-  }
+        0 4px 12px rgba(253, 216, 53, 0.3),
+        inset 0 1px 0 rgba(255, 255, 255, 0.4);
+    transition: all var(--duration-normal) var(--easing-default);
 
-  &:active {
-    transform: scale(0.98) translateY(0);
-    box-shadow:
-      0 2px 8px rgba(253, 216, 53, 0.3),
-      inset 0 1px 0 rgba(255, 255, 255, 0.3);
-  }
+    &:not(:disabled) {
+        &:hover {
+            background: linear-gradient(
+                135deg,
+                var(--color-yellow-hover) 0%,
+                var(--color-yellow) 100%
+            );
+            box-shadow:
+                0 6px 20px rgba(253, 216, 53, 0.4),
+                inset 0 1px 0 rgba(255, 255, 255, 0.5);
+            transform: translateY(-1px);
+        }
+
+        &:active {
+            transform: scale(0.98) translateY(0);
+            box-shadow:
+                0 2px 8px rgba(253, 216, 53, 0.3),
+                inset 0 1px 0 rgba(255, 255, 255, 0.3);
+        }
+    }
+
+    &:disabled {
+        background: var(--color-surface-hover);
+        color: var(--color-text-disabled);
+        border: 1px solid var(--color-border);
+        box-shadow: none;
+        cursor: not-allowed;
+        opacity: 0.6;
+        filter: grayscale(100%);
+    }
 }
