@@ -1,15 +1,8 @@
 import { useState, useEffect, useMemo, useRef, useCallback } from "react";
-import useTasksLocalStorage from "./useTasksLocalStorage";
+import tasksAPI from "../api/tasksAPI.js";
 
 const useTasks = () => {
-  const { savedTasks, saveTasks } = useTasksLocalStorage();
-
-  const [tasks, setTasks] = useState(
-    savedTasks ?? [
-      { id: "task-1", title: "Learn JS", isDone: false },
-      { id: "task-2", title: "Buy a milk", isDone: true },
-    ],
-  );
+  const [tasks, setTasks] = useState([]);
 
   const [newTaskTitle, setNewTaskTitle] = useState("");
   const [searchQuery, setSearchQuery] = useState("");
@@ -21,48 +14,59 @@ const useTasks = () => {
 
     if (isConfirmed) {
       setTasks([]);
+
+      tasksAPI.deleteAll(tasks).then(() => setTasks([]))
     }
-  }, []);
+  }, [tasks]);
 
   const deleteTask = useCallback(
     (taskId) => {
-      setTasks((prev) => prev.filter((task) => taskId !== task.id));
+
+      tasksAPI.delete(taskId)
+          .then(() => {
+            setTasks((prev) => prev.filter((task) => taskId !== task.id));
+          })
     },
     [tasks],
   );
 
   const toggleTaskComplete = useCallback(
     (taskId, isDone) => {
-      setTasks((prev) =>
-        prev.map((task) => {
-          if (taskId === task.id) return { ...task, isDone };
-          return task;
-        }),
-      );
+
+
+      tasksAPI.toggleComplete(taskId, isDone)
+          .then(() => {
+            setTasks((prev) =>
+                prev.map((task) => {
+                  if (taskId === task.id) return { ...task, isDone };
+                  return task;
+                }),
+            );
+          })
     },
     [tasks],
   );
 
   const addTask = useCallback((title) => {
     const newTask = {
-      id: crypto?.randomUUID() ?? Date.now().toString(),
       title,
       isDone: false,
     };
 
-    setTasks((prev) => [...prev, newTask]);
-    setNewTaskTitle("");
-    setSearchQuery("");
-    newTaskInputRef.current.focus();
+   tasksAPI.add(newTask)
+        .then((addedTask) => {
+          setTasks((prev) => [...prev, addedTask]);
+          setNewTaskTitle("");
+          setSearchQuery("");
+          newTaskInputRef.current.focus();
+        })
   }, []);
   // dependencies array ?
 
   useEffect(() => {
-    saveTasks(tasks);
-  }, [tasks]);
-
-  useEffect(() => {
     newTaskInputRef.current.focus();
+
+    tasksAPI.getAll().then((setTasks))
   }, []);
 
   const renderCount = useRef(0);
